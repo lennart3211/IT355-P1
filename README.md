@@ -4,4 +4,9 @@
 ## Tasks
 ### Lennart
 - OBJ05-J
+- ERR02-J
+- OBJ11-J
+- MET00-J
+- FIO02-J
+- FIO08-J
 
