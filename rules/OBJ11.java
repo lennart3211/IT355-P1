@@ -1,6 +1,7 @@
-/*
- * Author: Lennart
+/**
  * Rule: Be wary of letting constructors throw exceptions
+ *
+ * @author Lennart
  */
 
 // Declaring the class final prevents subclassing, which blocks the finalizer attack

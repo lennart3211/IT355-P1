@@ -1,6 +1,7 @@
-/*
- * Author: Lennart
+/**
  * Rule: Validate method arguments
+ *
+ * @author Lennart
  */
 
 

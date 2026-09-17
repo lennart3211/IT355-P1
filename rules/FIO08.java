@@ -1,6 +1,7 @@
-/*
- * Author: Lennart
+/**
  * Rule: Distinguish between characters or bytes read from a stream and -1
+ *
+ * @author Lennart
  */
 
 import java.io.FileReader;

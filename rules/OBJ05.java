@@ -1,6 +1,7 @@
-/*
- * Author: Lennart
+/**
  * Rule: Do not return references to private mutable class members
+ *
+ * @author Lennart
  */
 
 class Data {

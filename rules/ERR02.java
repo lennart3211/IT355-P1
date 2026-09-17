@@ -1,6 +1,7 @@
-/*
- * Author: Lennart
+/**
  * Rule: Prevent exceptions while logging data
+ *
+ * @author Lennart
  */
 
 import java.util.logging.Logger;
