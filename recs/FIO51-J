@@ -1,0 +1,34 @@
+/**
+ * Rule: Identify files using multiple file attributes or avoid reopening the file
+ * to reduce the risk of accessing an unintended file through a TOCTOU race.
+ *
+ * @author: luke
+ */
+
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
+public class SafeFileProcessor {
+
+    public static void processFile(String filename) {
+
+        // Open the file once for both reading and writing
+        try (RandomAccessFile file = new RandomAccessFile(filename, "rw")) {
+
+            // Write to the file
+            file.writeBytes("Updated file contents\n");
+
+            // Return to the beginning instead of closing and reopening
+            file.seek(0);
+
+            // Read the same file
+            String line;
+            while ((line = file.readLine()) != null) {
+                System.out.println(line);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Unable to access file.");
+        }
+    }
+}
