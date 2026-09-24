@@ -1,0 +1,36 @@
+/**
+ * Rule: Sanitize untrusted data before passing it to Runtime.exec() to prevent
+ * command and argument injection attacks.
+ *
+ * @author: luke
+ */
+
+public class SafeCommand {
+
+    public static String getDirectory(String userChoice) {
+
+        String dir;
+
+        try {
+            int choice = Integer.parseInt(userChoice);
+
+            switch (choice) {
+                case 1:
+                    dir = "data1";
+                    break;
+
+                case 2:
+                    dir = "data2";
+                    break;
+
+                default:
+                    throw new IllegalArgumentException("Invalid choice");
+            }
+
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid input");
+        }
+
+        return dir;
+    }
+}
