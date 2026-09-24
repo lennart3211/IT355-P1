@@ -1,0 +1,33 @@
+/**
+ * Rule: Enable serialization compatibility during class evolution by defining
+ * an explicit serialVersionUID for a Serializable class.
+ *
+ * @author: luke
+ */
+
+import java.io.Serializable;
+
+public class GameWeapon implements Serializable {
+
+    // Keeps the serialized version compatible across compatible class changes
+    private static final long serialVersionUID = 24L;
+
+    private int numOfWeapons = 10;
+
+    public GameWeapon(int numOfWeapons) {
+        this.numOfWeapons = numOfWeapons;
+    }
+
+    public int getNumOfWeapons() {
+        return numOfWeapons;
+    }
+
+    public void setNumOfWeapons(int numOfWeapons) {
+        this.numOfWeapons = numOfWeapons;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(numOfWeapons);
+    }
+}
