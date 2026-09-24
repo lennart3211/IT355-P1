@@ -1,0 +1,36 @@
+/**
+ * Rule: Perform proper cleanup at program termination by closing resources
+ * and using a shutdown hook when necessary.
+ *
+ * @author: luke
+ */
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.IOException;
+
+public class SafeCleanup {
+
+    public static void main(String[] args) {
+
+        try {
+            final InputStream in = new FileInputStream("file");
+
+            Runtime.getRuntime().addShutdownHook(new Thread() {
+                public void run() {
+                    try {
+                        // Clean up resources before the program terminates
+                        in.close();
+                    } catch (IOException e) {
+                        // Handle cleanup error
+                    }
+                }
+            });
+
+            // Main program code goes here
+
+        } catch (IOException e) {
+            // Handle file error
+        }
+    }
+}
