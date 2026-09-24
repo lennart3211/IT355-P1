@@ -1,3 +1,10 @@
+/** 
+* Rule: Prevent SQL injection by validating untrusted input and using parameterized 
+* queries instead of directly concatenating input into SQL statements.
+*
+* @author: luke
+*/
+
 import java.sql.*;
 
 public class DatabaseUtil {
