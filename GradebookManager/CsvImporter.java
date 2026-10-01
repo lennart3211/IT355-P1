@@ -3,6 +3,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
+import java.util.List;
 
 public class CsvImporter {
     private final GradeRepository repo;
@@ -27,9 +29,9 @@ public class CsvImporter {
     }
 
     public int importFile(Path csvFile) throws GradebookException {
-        try (BufferedReader reader = Files.newBufferedReader(csvFile)) {
+        int count = 0;
 
-            int count = 0;
+        try (BufferedReader reader = Files.newBufferedReader(csvFile)) {
             String line;
 
             while ((line = readLine(reader)) != null) {
@@ -40,7 +42,7 @@ public class CsvImporter {
                 int studentId = studentOpt.isPresent() ? studentOpt.get().getId() : repo.addStudent(parts[0]);
                 repo.addGrade(studentId, Integer.parseInt(parts[1]));
             }
-            input.close();
+            reader.close();
         } catch (Exception e) {
             throw new GradebookException("Failed to import CSV file", e);
         }
