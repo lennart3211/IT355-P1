@@ -1,4 +1,8 @@
 public class GradebookException extends Exception {
-    public GradebookException(String userSafeMessage) {}
-    public GradebookException(String userSafeMessage, Throwable cause) {}
+    public GradebookException(String message) {
+        super(message);
+    }
+    public GradebookException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
