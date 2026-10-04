@@ -1,17 +1,22 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Student implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String name;
-    private int grade;
     private int id;
+    private String name;
+    private List<Integer> grades;
 
-    public Student(int id, String name, int grade) {
+    public Student(int id, String name) {
+        this(id, name, List.of());
+    }
+
+    public Student(int id, String name, List<Integer> grades) {
         this.id = id;
         this.name = name;
-        this.grade = grade;
+        this.grades = new ArrayList<>(grades);
     }
 
     public int getId() {
@@ -20,12 +25,9 @@ public final class Student implements Serializable {
     public String getName() {
         return name;
     }
-    public int getGrade() {
-        return grade;
-    }
     
     public List<Integer> getGrades() {
-        return null;
+        return grades;
     }
 
     public void addGrade(int score) {}
@@ -48,7 +50,7 @@ public final class Student implements Serializable {
         return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", grade=" + grade +
+                ", grades=" + grades +
                 '}';
     }
 }
