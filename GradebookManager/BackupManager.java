@@ -20,14 +20,12 @@ public class BackupManager {
     }
 
     /**
-     * Creates a backup of the student data.
+     * Creates a backup of the student data and records the saved file's metadata.
+     * File-operation failures are reported instead of claiming success.
      *
-     * @param students   the list of students to back up
-     * @param backupFile the file to save the backup to
-     * @return the backup info
-     * @throws IOException if writing fails
-     * @throws GradebookException if the backup fails
-     * @see FIO02-J
+     * @param file the destination backup file
+     * @return metadata describing the completed backup file
+     * @throws GradebookException if the repository returns no student list, writing fails, or the backup metadata cannot be read
      * 
      * FIO02-J: Report a failed backup instead of claiming success.
     */
@@ -54,11 +52,13 @@ public class BackupManager {
     }
 
     /**
-     * 
-     * @param backupFile the file to restore from
-     * @param expected   the expected backup info to validate against
+     * Restores students from a backup whose metadata matches the expected values
+     * and replaces the repository's current student data.
+     *
+     * @param file the backup file to restore from
+     * @param expected the recorded metadata to compare against the backup file
      * @return the list of restored students
-     * @throws GradebookException if the restore fails
+     * @throws GradebookException if expected metadata is missing or doesn't match, reading fails, a saved class is unavailable, or the backup doesn't contain a list of students
      */
      public List<Student> restoreBackup(
             Path file, BackupInfo expected) throws GradebookException {
