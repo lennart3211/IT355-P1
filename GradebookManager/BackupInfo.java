@@ -31,7 +31,13 @@ public final class BackupInfo implements Serializable {
      * @throws IOException if reading the file attributes fails
      */
     public boolean matches(Path file) throws IOException {
-        return false;
+        if (!Files.exists(file)) {
+            return false;
+        }
+        BasicFileAttributes attributes = Files.readAttributes(file, BasicFileAttributes.class);
+        return size == attributes.size() &&
+               modified.equals(attributes.lastModifiedTime()) &&
+               fileKey.equals(attributes.fileKey());
     }
 
     /**
