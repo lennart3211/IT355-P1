@@ -6,6 +6,13 @@ public final class BackupInfo implements Serializable {
     private final FileTime modified;
     private final Object fileKey;
 
+    /**
+     * Creates a new backup info object.
+     *
+     * @param size     the size of the file
+     * @param modified the last modified time of the file
+     * @param fileKey  the file key of the file
+     */
     public BackupInfo(long size, FileTime modified, Object fileKey) {
         this.size = size;
         this.modified = modified;
