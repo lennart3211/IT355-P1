@@ -1,11 +1,11 @@
-package recomendations;
+package recommendations;
 
 /**
  * Demonstrates minimizing the accessibility of a class's members.
  * The public API exposes one operation while its validation and formatting
  * helpers remain private implementation details.
  */
-public class obj51 {
+public class OBJ51 {
 
 	/**
 	 * Creates a short completion summary using the class's public operation.
@@ -56,7 +56,7 @@ public class obj51 {
      * @author Caleb
 	 */
 	public static void main(String[] args) {
-		obj51 summary = new obj51();
+		OBJ51 summary = new OBJ51();
 		System.out.println(summary.createSummary("Secure Java Examples", 5));
 
 		try {
