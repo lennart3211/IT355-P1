@@ -1,6 +1,23 @@
 import java.util.Scanner;
 
+/**
+ * Runs the gradebook program and handles user input.
+ */
 public class GradebookManager {
+    private GradeRepository repo;
+    private Gradebook gradebook;
+
+    /**
+     * Creates the gradebook manager.
+     */
+    public GradebookManager() {
+        repo = new GradeRepository();
+        gradebook = new Gradebook(repo);
+    }
+
+    /**
+     * Runs the gradebook menu.
+     */
     public void run() {
         Scanner scan = new Scanner(System.in);
         String input;
@@ -28,9 +45,35 @@ public class GradebookManager {
 
             switch (choice) {
             case 1:
+                System.out.print("Enter student name: ");
+                String name = scan.nextLine();
+
+                try {
+                    gradebook.addStudent(name);
+                    System.out.println("Student added!");
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
+
             case 2:
+                System.out.print("Enter student name: ");
+                String studentName = scan.nextLine();
+
+                System.out.print("Enter grade: ");
+                String gradeInput = scan.nextLine();
+
+                try {
+                    float grade = Float.parseFloat(gradeInput);
+                    gradebook.addGrade(studentName, grade);
+                    System.out.println("Grade added!");
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid grade.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
+
             case 3:
                 break;
             case 4:
@@ -54,7 +97,11 @@ public class GradebookManager {
     }
 
     public void quit() {
-
+        // EXP52-J: Use braces for the body of if, for, or while statements.
+        if (repo != null) {
+            // FIO14-J: Perform proper cleanup before the program terminates.
+            repo.close();
+        }
     }
 
     public static void main(String[] args) {

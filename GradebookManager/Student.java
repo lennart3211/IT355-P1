@@ -5,34 +5,80 @@ import java.util.List;
 public final class Student implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    // OBJ01-J: Limit accessibility of fields.
     private int id;
     private String name;
     private List<Integer> grades;
 
+    /**
+     * Creates a student with no grades.
+     *
+     * @param id the student's ID
+     * @param name the student's name
+     */
     public Student(int id, String name) {
         this(id, name, List.of());
     }
 
+    /**
+     * Creates a student with an existing list of grades.
+     *
+     * @param id the student's ID
+     * @param name the student's name
+     * @param grades the student's grades
+     */
     public Student(int id, String name, List<Integer> grades) {
         this.id = id;
         this.name = name;
         this.grades = new ArrayList<>(grades);
     }
 
+    /**
+     * Returns the student's ID.
+     *
+     * @return the student's ID
+     */
     public int getId() {
         return id;
     }
+
+    /**
+     * Returns the student's name.
+     *
+     * @return the student's name
+     */
     public String getName() {
         return name;
     }
-    
+
+    /**
+     * Returns a copy of the student's grades.
+     *
+     * @return a copy of the student's grades
+     */
     public List<Integer> getGrades() {
-        return grades;
+        // OBJ05-J / OBJ13-J:
+        // Do not expose the original mutable list.
+        return new ArrayList<>(grades);
     }
 
-    public void addGrade(int score) {}
+    /**
+     * Adds a grade to the student.
+     *
+     * @param score the grade to add
+     */
+    public void addGrade(int score) {
+        grades.add(score);
+    }
+
+    /**
+     * Checks if the student has the same grades as another student.
+     *
+     * @param other the other student
+     * @return true if the students have the same grades, false otherwise
+     */
     public boolean hasSameGrades(Student other) {
-        return false;
+        return grades.equals(other.grades);
     }
 
     @Override public boolean equals(Object o) {
@@ -43,7 +89,7 @@ public final class Student implements Serializable {
     }
 
     @Override public int hashCode() {
-        return 0;
+        return Integer.hashCode(id);
     }
     
     @Override public String toString() {
