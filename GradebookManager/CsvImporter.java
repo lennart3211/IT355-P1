@@ -53,6 +53,7 @@ public class CsvImporter {
      */
     public int importFile(Path csvFile) throws GradebookException {
         int count = 0;
+        System.out.println("Importing CSV file: " + csvFile);
 
         try (BufferedReader reader = Files.newBufferedReader(csvFile)) {
             String line;
@@ -67,6 +68,7 @@ public class CsvImporter {
             }
             reader.close();
         } catch (Exception e) {
+            System.out.println("Error importing CSV file: " + e.getMessage());
             throw new GradebookException("Failed to import CSV file", e);
         }
 

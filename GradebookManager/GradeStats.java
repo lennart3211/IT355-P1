@@ -16,7 +16,7 @@ public final class GradeStats {
         }
         return (double) total/grades.size();
     }
-    public static int highest(List<Integer> grades) {}
-    public static int lowest(List<Integer> grades) {}
+    public static int highest(List<Integer> grades) { return 0; }
+    public static int lowest(List<Integer> grades) { return 0; }
     private GradeStats() {}
 }

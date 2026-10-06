@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.nio.file.Path;
 
 /**
  * Runs the gradebook program and handles user input.
@@ -79,8 +80,26 @@ public class GradebookManager {
             case 4:
                 break;
             case 5:
+                System.out.print("Enter path to CSV file: ");
+                String csvPath = scan.nextLine();
+                try {
+                    CsvImporter importer = new CsvImporter(repo);
+                    int count = importer.importFile(Path.of(csvPath));
+                    System.out.println("Imported " + count + " bytes from CSV file.");
+                } catch (GradebookException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case 6:
+                System.out.print("Enter path to report file: ");
+                String reportPath = scan.nextLine();
+                try {
+                    ReportExporter exporter = new ReportExporter(repo);
+                    exporter.export(Path.of(reportPath));
+                    System.out.println("Report exported to " + reportPath);
+                } catch (GradebookException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case 7:
                 break;
