@@ -1,4 +1,4 @@
-package recommendations;
+package recs;
 
 /**
  * Demonstrates minimizing the accessibility of a class's members.
