@@ -10,7 +10,16 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class BackupManager {
-    public BackupManager(GradeRepository repo) {}
+    private final GradeRepository repo;
+
+    /**
+     * Creates a new backup manager.
+     *
+     * @param repo the grade repository to manage
+     */
+    public BackupManager(GradeRepository repo) {
+         this.repo = repo;
+    }
 
     /**
      * Creates a backup of the student data.
