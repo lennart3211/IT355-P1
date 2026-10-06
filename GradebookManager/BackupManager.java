@@ -32,8 +32,16 @@ public class BackupManager {
      * FIO02-J: Report a failed backup instead of claiming success.
     */
     public BackupInfo createBackup(Path file) throws GradebookException {
+        List<Student> students = repo.getAllStudents();
+
+        if (students == null) {
+            throw new GradebookException("The repository didn't return a student list");
+        }
+
+        List<Student> snapshot = new ArrayList<>(students);
+
         try (ObjectOutputStream output = new ObjectOutputStream(Files.newOutputStream(file))) {
-            output.writeObject(new ArrayList<>(repo.getAllStudents()));
+            output.writeObject(snapshot);
         } catch (IOException e) {
             throw new GradebookException("Failed to create backup", e);
         }
