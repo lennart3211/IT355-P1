@@ -1,11 +1,11 @@
-package recomendations;
+package recs;
 
 import java.util.Objects;
 
 /**
  * Demonstrates using exceptions only for exceptional conditions.
  */
-public class err50 {
+public class ERR50 {
 
 	/**
 	 * Adds all values in an array using ordinary loop control.
