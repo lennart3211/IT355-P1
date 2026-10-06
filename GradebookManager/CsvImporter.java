@@ -6,13 +6,29 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.List;
 
+/**
+ * Imports grades from a CSV file into the grade repository.
+ * Each line in the CSV file should contain a student's name and a grade, separated by a comma.
+ */
 public class CsvImporter {
     private final GradeRepository repo;
 
+    /**
+     * Constructs a CsvImporter with the specified grade repository.
+     *
+     * @param repo the grade repository to import grades into
+     */
     public CsvImporter(GradeRepository repo) {
         this.repo = repo;
     }
 
+    /**
+     * Reads a single line from the specified BufferedReader.
+     *
+     * @param reader the BufferedReader to read from
+     * @return the line read, or null if the end of the stream is reached
+     * @throws IOException if an I/O error occurs
+     */
     private String readLine(BufferedReader reader) throws IOException {
         StringBuilder line = new StringBuilder();
         int c;
@@ -28,6 +44,13 @@ public class CsvImporter {
         return line.length() > 0 ? line.toString() : null;
     }
 
+    /**
+     * Imports grades from the specified CSV file into the grade repository.
+     *
+     * @param csvFile the path to the CSV file
+     * @return the number of characters read from the CSV file
+     * @throws GradebookException if an error occurs while importing the CSV file
+     */
     public int importFile(Path csvFile) throws GradebookException {
         int count = 0;
 
