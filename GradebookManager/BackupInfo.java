@@ -1,4 +1,8 @@
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 
 public final class BackupInfo implements Serializable {
@@ -19,7 +23,27 @@ public final class BackupInfo implements Serializable {
         this.fileKey = fileKey;
     }
 
+    /**
+     * Checks if the given file matches this backup info.
+     *
+     * @param file the file to check
+     * @return true if the file matches, false otherwise
+     * @throws IOException if reading the file attributes fails
+     */
     public boolean matches(Path file) throws IOException {
         return false;
     }
+
+    /**
+     * Creates a new backup info object from the given file.
+     *
+     * @param file the file to create the backup info from
+     * @return the backup info
+     * @throws IOException if reading the file attributes fails
+     */
+    public static BackupInfo from(Path file) throws IOException {
+        BasicFileAttributes attributes = Files.readAttributes(file, BasicFileAttributes.class);
+        
+        return new BackupInfo( attributes.size(), attributes.lastModifiedTime(), attributes.fileKey());
+}
 }

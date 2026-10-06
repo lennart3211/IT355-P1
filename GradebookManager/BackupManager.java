@@ -2,12 +2,10 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.attribute.FileTime;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BackupManager {
     private final GradeRepository repo;
@@ -26,10 +24,12 @@ public class BackupManager {
      *
      * @param students   the list of students to back up
      * @param backupFile the file to save the backup to
+     * @return the backup info
      * @throws IOException if writing fails
      * @throws GradebookException if the backup fails
+     * @see FIO02-J
      * 
-     FIO02-J: Report a failed backup instead of claiming success.
+     * FIO02-J: Report a failed backup instead of claiming success.
     */
     public BackupInfo createBackup(Path file) throws GradebookException {
         try (ObjectOutputStream output = new ObjectOutputStream(Files.newOutputStream(file))) {
