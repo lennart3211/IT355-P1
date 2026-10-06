@@ -1,4 +1,4 @@
-package recomendations;
+package recs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Demonstrates avoiding ambiguous or confusing uses of overloading.
  */
-public class met50 {
+public class MET50 {
 	private final List<Integer> values;
 
 	/**
@@ -15,7 +15,7 @@ public class met50 {
 	 *
 	 * @param initialValues the values to store
 	 */
-	public met50(Integer... initialValues) {
+	public MET50(Integer... initialValues) {
 		values = new ArrayList<>(Arrays.asList(initialValues));
 	}
 
@@ -59,7 +59,7 @@ public class met50 {
      * @author Caleb
 	 */
 	public static void main(String[] args) {
-		met50 numbers = new met50(10, 20, 30);
+		MET50 numbers = new MET50(10, 20, 30);
 
 		Integer removedByIndex = numbers.removeByIndex(1);
 		boolean removedByValue = numbers.removeByValue(30);
