@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.nio.file.Path;
-
+import java.util.Optional;
 /**
  * Runs the gradebook program and handles user input.
  */
@@ -76,8 +76,32 @@ public class GradebookManager {
                 break;
 
             case 3:
+                System.out.print("Enter student name: ");
+                String searchName = scan.nextLine();
+                
+                Optional<Student> student = repo.findStudentsByName(searchName);
+                
+                if (student.isPresent()) {
+                    Student foundStudent = student.get();
+                    System.out.println("Student found:");
+                    System.out.println("Name: " + foundStudent.getName()+ " ID: " + foundStudent.getId());
+                    System.out.println("Grades: " + foundStudent.getGrades());
+                } else {
+                        System.out.println("Student not found.");
+                    }
                 break;
             case 4:
+                System.out.print("Enter student name: ");
+                String averageName = scan.nextLine();
+                Optional<Student> averageStudent = repo.findStudentsByName(averageName);
+                if (averageStudent.isPresent()) {
+                    Student foundStudent = averageStudent.get();
+                    System.out.println("Grades: " + foundStudent.getGrades());
+                    double average = GradeStats.average(foundStudent.getGrades());
+                    System.out.printf("Average: %.2f%n", average);
+                } else {
+                        System.out.println("Student not found.");
+                    }  
                 break;
             case 5:
                 System.out.print("Enter path to CSV file: ");
