@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.Scanner;
@@ -133,23 +134,29 @@ public class GradebookManager {
             case 7:
                 try {
                     backupInfo = backups.createBackup(backupFile);
+                    backupInfo.save(backupMetadataFile);
+
                     System.out.println("Backup saved successfully.");
                 } catch (GradebookException e) {
                     System.out.println(e.getMessage());
+                } catch (IOException e) {
+                    System.out.println("Backup file was saved successfully, but failed to save metadata.");
                 }
                 break;
             case 8:
-                if (backupInfo == null) {
-                    System.out.println("Create a backup during this session before restoring.");
-                    break;
-                }
-
                 try {
+                    if (backupInfo == null) {
+                        backupInfo = BackupInfo.load(backupMetadataFile);
+                    }
+
                     int restoredCount = backups.restoreBackup(backupFile, backupInfo).size();
 
                     System.out.println("Restored " + restoredCount + " students from backup.");
+                    
                 } catch (GradebookException e) {
                     System.out.println(e.getMessage());
+                } catch (IOException e) {
+                    System.out.println("Failed to read backup metadata.");
                 }
                 break;
             case 9:
