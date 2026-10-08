@@ -1,12 +1,15 @@
-import java.util.Scanner;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.Scanner;
 /**
  * Runs the gradebook program and handles user input.
  */
 public class GradebookManager {
     private GradeRepository repo;
     private Gradebook gradebook;
+    private final BackupManager backups;
+    private final Path backupFile = Path.of("gradebook-backup.ser");
+    private BackupInfo backupInfo;
 
     /**
      * Creates the gradebook manager.
@@ -14,6 +17,7 @@ public class GradebookManager {
     public GradebookManager() {
         repo = new GradeRepository();
         gradebook = new Gradebook(repo);
+        backups = new BackupManager(repo);
     }
 
     /**
@@ -126,8 +130,26 @@ public class GradebookManager {
                 }
                 break;
             case 7:
+                try {
+                    backupInfo = backups.createBackup(backupFile);
+                    System.out.println("Backup saved successfully.");
+                } catch (GradebookException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case 8:
+                if (backupInfo == null) {
+                    System.out.println("Create a backup during this session before restoring.");
+                    break;
+                }
+
+                try {
+                    int restoredCount = backups.restoreBackup(backupFile, backupInfo).size();
+
+                    System.out.println("Restored " + restoredCount + " students from backup.");
+                } catch (GradebookException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case 9:
                 break;
