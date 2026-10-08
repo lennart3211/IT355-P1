@@ -4,6 +4,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Demonstrates an atomic compound update on a shared counter.
+ * 
+ * @author Caleb
  */
 public class VNA02 {
     private static final int INCREMENTS_PER_THREAD = 10_000;
@@ -41,8 +43,6 @@ public class VNA02 {
      * @param sharedCounter the counter shared by the worker threads
      * @param threadName the name assigned to the new thread
      * @return a thread ready to start
-     * 
-     * @author Caleb
      */
     private static Thread createIncrementingThread(
             AtomicInteger sharedCounter, String threadName) {

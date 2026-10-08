@@ -2,8 +2,10 @@ package recs;
 
 /**
  * Demonstrates minimizing the accessibility of a class's members.
- * The public API exposes one operation while its validation and formatting
- * helpers remain private implementation details.
+ * Other classes use createSummary(), while the validation and
+ * formatting helper methods remain private to the class.
+ * 
+ * @author Caleb
  */
 public class OBJ51 {
 
@@ -13,8 +15,8 @@ public class OBJ51 {
 	 * @param projectName the name of the project
 	 * @param completedTasks the number of completed tasks
 	 * @return a formatted completion summary
-	 * @throws IllegalArgumentException if the project name is blank or the
-	 *         task count is negative
+	 * @throws IllegalArgumentException if the project name is null, blank, or if
+	 *         the task count is negative
 	 */
 	public String createSummary(String projectName, int completedTasks) {
 		validateInput(projectName, completedTasks);
@@ -49,11 +51,9 @@ public class OBJ51 {
 	}
 
 	/**
-	 * Demonstrates the narrow public API and its validation behavior.
+	 * Demonstrates creating a summary and handling invalid input.
 	 *
 	 * @param args command-line arguments, which are not used
-     * 
-     * @author Caleb
 	 */
 	public static void main(String[] args) {
 		OBJ51 summary = new OBJ51();

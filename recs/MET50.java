@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  * Demonstrates avoiding ambiguous or confusing uses of overloading.
+ * 
+ * @author Caleb
  */
 public class MET50 {
 	private final List<Integer> values;
@@ -55,8 +57,6 @@ public class MET50 {
 	 * removal.
 	 *
 	 * @param args command-line arguments, which are not used
-     * 
-     * @author Caleb
 	 */
 	public static void main(String[] args) {
 		MET50 numbers = new MET50(10, 20, 30);

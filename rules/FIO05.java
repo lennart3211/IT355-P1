@@ -6,6 +6,8 @@ import java.util.Arrays;
 /**
  * Demonstrates protecting a character array from modification through a
  * returned buffer.
+ * 
+ * @author Caleb
  */
 public class FIO05 {
     private final char[] storedText;
@@ -43,8 +45,6 @@ public class FIO05 {
      * original stored text.
      *
      * @param args command-line arguments, which are not used
-     * 
-     * @author Caleb
      */
     public static void main(String[] args) {
         FIO05 protectedText = new FIO05("SAFE".toCharArray());

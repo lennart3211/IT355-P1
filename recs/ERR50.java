@@ -4,6 +4,8 @@ import java.util.Objects;
 
 /**
  * Demonstrates using exceptions only for exceptional conditions.
+ * 
+ * @author Caleb
  */
 public class ERR50 {
 
@@ -29,8 +31,6 @@ public class ERR50 {
 	 * Demonstrates normal processing for both populated and empty arrays.
 	 *
 	 * @param args command-line arguments, which are not used
-     * 
-     * @author Caleb
 	 */
 	public static void main(String[] args) {
 		int[] populatedValues = {4, 7, 2};

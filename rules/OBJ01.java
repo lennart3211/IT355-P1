@@ -2,6 +2,8 @@ package rules;
 /**
  * Demonstrates OBJ01-J by keeping a counter's field private and
  * controlling changes through methods.
+ * 
+ * @author Caleb
  */
 public class OBJ01 {
     private int count;
@@ -46,8 +48,6 @@ public class OBJ01 {
      * Demonstrates that the counter cannot be decreased below zero.
      *
      * @param args command-line arguments, which are not used
-     * 
-     * @author Caleb
      */
     public static void main(String[] args) {
         OBJ01 counter = new OBJ01();
