@@ -1,0 +1,32 @@
+/**
+ * Rule: Try to gracefully recover from system errors by handling serious errors,
+ * logging them, and releasing resources before the program terminates.
+ *
+ * @author: luke
+ */
+
+public class SafeErrorHandler {
+
+    public static void main(String[] args) {
+
+        try {
+            performTask();
+
+        } catch (Throwable t) {
+            // Forward/log the error to an appropriate handler
+            System.err.println("System error occurred: " + t.getClass().getName());
+
+        } finally {
+            // Release resources and perform necessary cleanup
+            cleanup();
+        }
+    }
+
+    private static void performTask() {
+        // Main application code
+    }
+
+    private static void cleanup() {
+        System.out.println("Cleaning up resources...");
+    }
+}
