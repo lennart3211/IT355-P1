@@ -160,14 +160,54 @@ public class GradebookManager {
                 }
                 break;
             case 9:
+                System.out.print("Enter path to report file: ");
+                String viewPath = scan.nextLine();
+
+                System.out.println("Choose a viewer:");
+                System.out.println("1. Notepad");
+                System.out.println("2. Less");
+                System.out.println("3. Cat");
+
+                try {
+                    int viewerChoice = Integer.parseInt(scan.nextLine());
+
+                    ReportViewer.Viewer viewer = null;
+
+                    switch (viewerChoice) {
+                        case 1:
+                            viewer = ReportViewer.Viewer.NOTEPAD;
+                            break;
+                        case 2:
+                            viewer = ReportViewer.Viewer.LESS;
+                            break;
+                        case 3:
+                            viewer = ReportViewer.Viewer.CAT;
+                            break;
+                        default:
+                            System.out.println("Invalid viewer choice.");
+                            break;
+                    }
+
+                    if (viewer != null) {
+                        ReportViewer reportViewer = new ReportViewer();
+                        reportViewer.open(Path.of(viewPath), viewer);
+                    }
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid viewer choice.");
+                } catch (GradebookException e) {
+                    System.out.println("Could not open the report.");
+                }
                 break;
             case 10:
+                System.out.println("Exiting Gradebook Manager
+                System.out.println("Closing database and releasing resources.");
                 break;
             default:
                 System.out.println("Invalid Input");
-            }
-        } while (choice != 10);
-    }
+             }            
+          } while (choice != 10);
+      }
 
     public void quit() {
         // EXP52-J: Use braces for the body of if, for, or while statements.
