@@ -9,6 +9,7 @@ public class GradebookManager {
     private Gradebook gradebook;
     private final BackupManager backups;
     private final Path backupFile = Path.of("gradebook-backup.ser");
+    private final Path backupMetadataFile = Path.of("gradebook-backup.meta");
     private BackupInfo backupInfo;
 
     /**

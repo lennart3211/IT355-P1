@@ -1,12 +1,15 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
+import java.time.DateTimeException;
+import java.time.Instant;
 import java.util.Objects;
 
-public final class BackupInfo implements Serializable {
+public final class BackupInfo {
     private final long size;
     private final FileTime modified;
     private final Object fileKey;
@@ -37,8 +40,8 @@ public final class BackupInfo implements Serializable {
         }
         BasicFileAttributes attributes = Files.readAttributes(file, BasicFileAttributes.class);
         return size == attributes.size() &&
-               modified.equals(attributes.lastModifiedTime()) &&
-               Objects.equals(fileKey, attributes.fileKey());
+               modified.equals(attributes.lastModifiedTime())
+               && (fileKey == null || Objects.equals(fileKey, attributes.fileKey()));
     }
 
     /**
@@ -52,5 +55,46 @@ public final class BackupInfo implements Serializable {
         BasicFileAttributes attributes = Files.readAttributes(file, BasicFileAttributes.class);
         
         return new BackupInfo( attributes.size(), attributes.lastModifiedTime(), attributes.fileKey());
-}
+    }
+
+    /**
+     * Saves this backup info to the given file.
+     *
+     * @param metadataFile the file to save the backup info to
+     * @throws IOException if writing to the file fails
+     */
+    public void save(Path metadataFile) throws IOException {
+        Instant timestamp = modified.toInstant();
+
+        try (DataOutputStream output = new DataOutputStream(Files.newOutputStream(metadataFile))) {
+            output.writeLong(size);
+            output.writeLong(timestamp.getEpochSecond());
+            output.writeInt(timestamp.getNano());
+        }
+    }
+
+    /**
+     * Loads a backup info object from the given file.
+     *
+     * @param metadataFile the file to load the backup info from
+     * @return the backup info
+     * @throws IOException if reading the file fails
+     */
+    public static BackupInfo load(Path metadataFile) throws IOException {
+        try (DataInputStream input = new DataInputStream(Files.newInputStream(metadataFile))) {
+            long savedSize = input.readLong();
+            long seconds = input.readLong();
+            int nanos = input.readInt();
+
+            if (savedSize < 0 || nanos < 0 || nanos > 999_999_999) {
+                throw new IOException("Invalid backup info data");
+            }
+
+            FileTime savedModified = FileTime.from(Instant.ofEpochSecond(seconds, nanos));
+
+            return new BackupInfo(savedSize, savedModified, null);
+        } catch (DateTimeException e) {
+            throw new IOException("Invalid backup info data", e);
+        }
+    }
 }
