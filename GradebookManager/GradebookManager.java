@@ -104,7 +104,12 @@ public class GradebookManager {
                     Student foundStudent = averageStudent.get();
                     System.out.println("Grades: " + foundStudent.getGrades());
                     double average = GradeStats.average(foundStudent.getGrades());
+                    int highest = GradeStats.highest(foundStudent.getGrades());
+                    int lowest = GradeStats.lowest(foundStudent.getGrades());
+                    
                     System.out.printf("Average: %.2f%n", average);
+                    System.out.println("Highest: " + highest);
+                    System.out.println("Lowest: " + lowest);
                 } else {
                         System.out.println("Student not found.");
                     }  
