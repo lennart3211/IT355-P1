@@ -9,6 +9,8 @@ import java.io.Serializable;
 
 /**
  * Demonstrates correctly declared custom serialization methods.
+ * 
+ * @author Caleb
  */
 public class SER01 {
 
@@ -86,8 +88,6 @@ public class SER01 {
          * @param input the stream containing this object's data
          * @throws IOException if reading the object fails
          * @throws ClassNotFoundException if a serialized field type is unavailable
-         * 
-         * @author Caleb
          */
         private void readObject(ObjectInputStream input)
                 throws IOException, ClassNotFoundException {
