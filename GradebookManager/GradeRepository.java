@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Stores students and grades while the program is running.
@@ -100,5 +100,26 @@ public class GradeRepository {
      */
     public void close() {
         students.clear();
+    }
+
+    /**
+     * Replaces all students in the repository with the given list.
+     *
+     * @param restoredStudents the list of students to replace the current list
+     * @throws ArithmeticException if the next ID calculation overflows
+     */
+    public void replaceAll(List<Student> restoredStudents) {
+        List<Student> replacement = new ArrayList<>(restoredStudents);
+
+        int highestId = 0;
+        for (Student student : replacement) {
+            highestId = Math.max(highestId, student.getId());
+        }
+
+        int updatedNextId = Math.addExact(highestId, 1);
+
+        students.clear();
+        students.addAll(replacement);
+        nextId = updatedNextId;
     }
 }
