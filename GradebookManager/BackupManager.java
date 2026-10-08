@@ -77,7 +77,7 @@ public class BackupManager {
      * @param file the backup file to restore from
      * @param expected the recorded metadata to compare against the backup file
      * @return the list of restored students
-     * @throws GradebookException if expected metadata is missing or doesn't match, reading fails, a saved class is unavailable, or the backup doesn't contain a list of students
+     * @throws GradebookException if expected metadata is missing or doesn't match, reading fails, a saved class is unavailable, arithmetic errors occur, or the backup doesn't contain a list of students
      */
      public List<Student> restoreBackup(
             Path file, BackupInfo expected) throws GradebookException {
@@ -117,7 +117,7 @@ public class BackupManager {
 
         } catch (GradebookException exception) {
             throw exception;
-        } catch (IOException | ClassNotFoundException exception) {
+        } catch (IOException | ClassNotFoundException | ArithmeticException exception) {
             throw new GradebookException(
                     "Failed to restore backup", exception);
         }

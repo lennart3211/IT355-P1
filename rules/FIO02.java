@@ -7,6 +7,8 @@ import java.nio.file.Path;
 /**
  * Demonstrates detecting and handling file-related errors using
  * a temporary file created by this program.
+ * 
+ * @author Caleb
  */
 public class FIO02 {
 
@@ -44,8 +46,6 @@ public class FIO02 {
      * Runs the demonstration and reports an unexpected I/O failure.
      *
      * @param args command-line arguments, which are not used
-     * 
-     * @author Caleb
      */
     public static void main(String[] args) {
         try {
