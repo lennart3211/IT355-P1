@@ -1,0 +1,37 @@
+/**
+ * Rule: Do not make assumptions about file creation; atomically create new files
+ * and handle the case where the file already exists.
+ *
+ * @author: luke
+ */
+
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
+public class SafeFileCreator {
+
+    public static void createFile(String filename) {
+
+        Path path = Paths.get(filename);
+
+        try (OutputStream out = new BufferedOutputStream(
+                Files.newOutputStream(path, StandardOpenOption.CREATE_NEW))) {
+
+            // Work with the newly created file
+            out.write("New file data".getBytes());
+
+        } catch (java.nio.file.FileAlreadyExistsException e) {
+            // File already exists; do not overwrite it
+            System.out.println("File already exists.");
+
+        } catch (IOException e) {
+            // File could not be created or written
+            System.out.println("File creation failed.");
+        }
+    }
+}
