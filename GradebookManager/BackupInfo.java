@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
+import java.util.Objects;
 
 public final class BackupInfo implements Serializable {
     private final long size;
@@ -37,7 +38,7 @@ public final class BackupInfo implements Serializable {
         BasicFileAttributes attributes = Files.readAttributes(file, BasicFileAttributes.class);
         return size == attributes.size() &&
                modified.equals(attributes.lastModifiedTime()) &&
-               fileKey.equals(attributes.fileKey());
+               Objects.equals(fileKey, attributes.fileKey());
     }
 
     /**
