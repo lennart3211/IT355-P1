@@ -38,9 +38,28 @@ public class BackupManager {
 
         List<Student> snapshot = new ArrayList<>(students);
 
-        try (ObjectOutputStream output = new ObjectOutputStream(Files.newOutputStream(file))) {
-            output.writeObject(snapshot);
+        Path temporaryFile = null;
+
+        try {
+            Path destination = file.toAbsolutePath();
+
+            temporaryFile = Files.createTempFile(destination.getParent(), "gradebook-", ".tmp");
+
+            try (ObjectOutputStream output = new ObjectOutputStream(Files.newOutputStream(temporaryFile))) {
+                output.writeObject(snapshot);
+            }
+
+            Files.move( temporaryFile, destination, java.nio.file.StandardCopyOption.ATOMIC_MOVE);
+
         } catch (IOException e) {
+            if (temporaryFile != null) {
+                try {
+                    Files.deleteIfExists(temporaryFile);
+                } catch (IOException deleteException) {
+                    // Preserve the cleanup failure alongside the original failure.
+                    e.addSuppressed(deleteException);
+                }
+            }
             throw new GradebookException("Failed to create backup", e);
         }
 
