@@ -200,7 +200,7 @@ public class GradebookManager {
                 }
                 break;
             case 10:
-                System.out.println("Exiting Gradebook Manager
+                System.out.println("Exiting Gradebook Manager");
                 System.out.println("Closing database and releasing resources.");
                 break;
             default:
