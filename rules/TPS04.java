@@ -15,11 +15,14 @@ public class TPS04 implements Runnable {
     public void run(){
         try {
             user.set(userID);
-            //Perform operations
+            /**
+             * Perform operations 
+             */
         } finally {
-            //Ensure ThreadLocal is cleard to prevent data leakage
+            /**
+             * Ensure ThreadLocal is cleard to prevent data leakage
+             */
             user.remove();
         }
     }
 }
-
