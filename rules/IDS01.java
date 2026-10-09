@@ -1,6 +1,6 @@
 import java.text.Normalizer;
 
-public class InputValidator {
+public class IDS01{
     /**
      * Normalizes and validates input string against allowed characters
      *
