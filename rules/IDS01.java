@@ -1,6 +1,6 @@
 import java.text.Normalizer;
 
-public class IDS01{
+public class IDS01 {
     /**
      * Normalizes and validates input string against allowed characters
      *
@@ -11,7 +11,8 @@ public class IDS01{
         if (input == null) {
             return false;
         }
-        String normalized = Nomralizer.normalize(input, Normalizer.Form.NFKC);
-        return normalized.matches("^[a-zA-Z0-9]+$);
+        //Normalize to cannonical composition form before validation
+        String normalized = Normalizer.normalize(input, Normalizer.Form.NFKC);
+        return normalized.matches("^[a-zA-Z0-9]+$");
     }
 }
