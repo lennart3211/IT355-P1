@@ -11,7 +11,9 @@ public class IDS01 {
         if (input == null) {
             return false;
         }
-        //Normalize to cannonical composition form before validation
+        /**
+         * Normalize to cannonical composition form before validation
+         */
         String normalized = Normalizer.normalize(input, Normalizer.Form.NFKC);
         return normalized.matches("^[a-zA-Z0-9]+$");
     }
