@@ -120,7 +120,7 @@ public class GradebookManager {
                 try {
                     CsvImporter importer = new CsvImporter(repo);
                     int count = importer.importFile(Path.of(csvPath));
-                    System.out.println("Imported " + count + " bytes from CSV file.");
+                    System.out.println("Imported " + count + " grades from CSV file.");
                 } catch (GradebookException e) {
                     System.out.println(e.getMessage());
                 }

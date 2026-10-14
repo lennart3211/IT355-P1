@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.List;
+import java.nio.file.NoSuchFileException;
+
 
 /**
  * Imports grades from a CSV file into the grade repository.
@@ -45,33 +47,63 @@ public class CsvImporter {
     }
 
     /**
-     * Imports grades from the specified CSV file into the grade repository.
+     * Imports grades from the specified CSV file.
      *
      * @param csvFile the path to the CSV file
-     * @return the number of characters read from the CSV file
-     * @throws GradebookException if an error occurs while importing the CSV file
+     * @return the number of successfully imported rows
+     * @throws GradebookException if an error occurs during import
      */
     public int importFile(Path csvFile) throws GradebookException {
-        int count = 0;
-        System.out.println("Importing CSV file: " + csvFile);
+        if (csvFile == null) {                               
+            throw new IllegalArgumentException("csvFile must not be null");
+        }
+        int imported = 0;
+        int lineNumber = 0;
 
         try (BufferedReader reader = Files.newBufferedReader(csvFile)) {
             String line;
-
             while ((line = readLine(reader)) != null) {
-                count += line.length();
-                String[] parts = line.split(",");
-
-                Optional<Student> studentOpt = repo.findStudentsByName(parts[0]);
-                int studentId = studentOpt.isPresent() ? studentOpt.get().getId() : repo.addStudent(parts[0]);
-                repo.addGrade(studentId, Integer.parseInt(parts[1]));
+                lineNumber++;
+                if (lineNumber == 1 && line.trim().equalsIgnoreCase("name,score")) {
+                    continue;       
+                }
+                if (importRow(line)) {
+                    imported++;
+                } else {
+                    Logger.info("Skipped invalid row " + lineNumber);
+                }
             }
-            reader.close();
-        } catch (Exception e) {
-            System.out.println("Error importing CSV file: " + e.getMessage());
-            throw new GradebookException("Failed to import CSV file", e);
+        } catch (NoSuchFileException e) {
+            throw new GradebookException("CSV file not found.", e);
+        } catch (IOException e) {
+            Logger.error("CSV import failed", e);
+            throw new GradebookException("Could not read the CSV file.", e);
+        }
+        return imported;
+    }
+
+    private boolean importRow(String line) throws GradebookException {
+        String[] parts = line.split(",");
+        if (parts.length != 2) {
+            return false;
+        }
+        String name = parts[0].trim();
+        if (name.isEmpty()) {
+            return false;
+        }
+        int score;
+        try {
+            score = Integer.parseInt(parts[1].trim());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        if (score < AppConfig.MIN_SCORE || score > AppConfig.MAX_SCORE) {
+            return false;
         }
 
-        return count;
+        Optional<Student> existing = repo.findStudentsByName(name);
+        int studentId = existing.isPresent() ? existing.get().getId() : repo.addStudent(name);
+        repo.addGrade(studentId, score);
+        return true;
     }
 }
