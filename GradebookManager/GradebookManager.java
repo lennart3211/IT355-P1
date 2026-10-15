@@ -29,7 +29,7 @@ public class GradebookManager {
         Scanner scan = new Scanner(System.in);
         String input;
         int choice = 0;
-        String menu = "Menu:\n" +
+        String menu = "\nMenu:\n" +
         "  1. Add Student\n" +
         "  2. Add Grade\n" +
         "  3. Search Student\n" +

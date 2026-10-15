@@ -48,11 +48,15 @@ public class ReportViewer {
 
         try {
             // The command comes only from the trusted Viewer whitelist.
-            Runtime.getRuntime().exec(
-                new String[] { command, report.toString() }
-            );
+            new ProcessBuilder(command, report.toString())
+                .inheritIO()
+                .start()
+                .waitFor();
         } catch (IOException e) {
             throw new GradebookException("Failed to open report.", e);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new GradebookException("Interrupted while viewing report.", e);
         }
     }
 
